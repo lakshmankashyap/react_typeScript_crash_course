@@ -1,36 +1,29 @@
-import React from "react";
-import react,{useState} from "react";
-import {IState as Props} from "../App";
+import React, { useState } from 'react'
+import { IState as Props } from "../App";
 
 interface IProps {
-    setPeople:React.Dispatch<React.SetStateAction<Props['people']>>
-    people:Props['people'],
+    setPeople: React.Dispatch<React.SetStateAction<Props["people"]>>
+    people: Props["people"]
 }
 
-
-const AddToList:React.FC<IProps> = ({setPeople, people}) => {
+const AddToList: React.FC<IProps> = ({setPeople, people}) => {
 
     const [input, setInput] = useState({
-        name:"",
-        age:"",
-        note:"",
-        img:""
-    });
+        name: "",
+        age: "",
+        note: "",
+        img: ""
+    }) 
 
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-        debugger;
-         setInput({
-             ...input,
-             [e.target.name]:e.target.value
-         })
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
     }
 
-    const handleClick = ():void=>{
-        if(
-            !input.name || !input.age || !input.img
-        ){
-            return
-        }
+    const handleClick = () => {
+        if(!input.name || !input.age) return
 
         setPeople([
             ...people,
@@ -49,40 +42,48 @@ const AddToList:React.FC<IProps> = ({setPeople, people}) => {
             note: ""
         })
     }
+
     return (
         <div className="AddToList">
-            <input
+            <input 
                 type="text"
-                placeholder="name"
+                onChange={handleChange}
                 className="AddToList-input"
+                name="name"
                 value={input.name}
-                onChange={handleChange}
+                placeholder="Name"
             />
-            <input
+            <input 
                 type="text"
-                placeholder="Age"
+                onChange={handleChange}
                 className="AddToList-input"
+                name="age"
                 value={input.age}
-                onChange={handleChange}
+                placeholder="Age"
             />
-            <input
+            <input 
                 type="text"
-                placeholder="Image Url"
-                className="AddToList-input"
-                value={input.img}
                 onChange={handleChange}
+                className="AddToList-input"
+                name="img"
+                value={input.img}
+                placeholder="Image Url"
             />
             <textarea
-                placeholder="Notes"
-                className="AddToList-input"
-                value={input.note}
                 onChange={handleChange}
+                className="AddToList-input"
+                name="note"
+                value={input.note}
+                placeholder="Note"
             />
-            <button className="AddToList-btn" onClick={handleClick}>
+            <button
+                onClick={handleClick}
+                className="AddToList-btn"
+            >
                 Add to List
             </button>
         </div>
     )
 }
 
-export default AddToList;
+export default AddToList
